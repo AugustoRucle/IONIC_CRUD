@@ -1,0 +1,7 @@
+{
+  "name": "CRUD_FINAL",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
