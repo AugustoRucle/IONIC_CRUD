@@ -1,0 +1,19 @@
+<ion-content padding>
+  <div class="container">
+    <div style="margin: auto">
+      <h2 class="title">Shopping List</h2>
+      <form [formGroup]="userForm" padding-right>
+        <!-- Email type input -->
+        <ion-input type="text" class="style_inputs" placeholder="Email" formControlName="email" required></ion-input><br>
+        <!-- Password type input -->
+        <ion-input type="password" class="style_inputs" placeholder="Password" formControlName="password" required></ion-input> <br>     
+        <!-- Button submit -->
+        <ion-button 
+          color="dark" 
+          expand="full" 
+          [disabled]="!userForm.valid" 
+          (click)="loginForm()">Login</ion-button>    
+      </form>
+    </div>
+  </div>
+</ion-content>
