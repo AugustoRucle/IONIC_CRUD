@@ -26,6 +26,6 @@ export class LoginPage implements OnInit {
 
   loginForm(){
     console.log(this.userForm.value)
-    this.router.navigateByUrl('/menu/tabs/tab1');
+    this.router.navigateByUrl('/menu/tabs/tab2');
   }
 }
