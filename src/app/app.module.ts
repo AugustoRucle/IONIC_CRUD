@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 
 /* Other */
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { NotesService } from './services/notes.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   providers: [
     StatusBar,
     SplashScreen,
+    SQLite,
+    NotesService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
