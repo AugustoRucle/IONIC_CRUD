@@ -1,4 +1,44 @@
-.welcome-card ion-img {
-  max-height: 35vh;
-  overflow: hidden;
+.style_inputs{
+  border-style:solid; 
+  border-width:2px;
+  padding: 0px 5px 0px 5px !important;
+  margin-top: 10px !important;
 }
+
+.style_status{
+  font-size: 50px;
+  margin:auto; 
+  margin-right: 10px;
+}
+
+ion-icon{
+  color:black;
+  font-size: 30px;
+}
+
+.style_status_off{
+  color: red;
+}
+
+.style_status_on{
+  color: green;
+}
+
+.title_card{
+  margin-bottom: 10px; 
+  font-size: 20px;
+}
+
+.btn{
+  width: 100%;
+  background-color: red;
+}
+
+h5{
+  margin: 5px;
+}
+.subtitle-element{
+  font-size: 20px;
+  margin-left: 20px;
+}
+
