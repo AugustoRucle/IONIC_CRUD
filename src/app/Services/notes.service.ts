@@ -4,6 +4,7 @@ import { SQLiteObject } from '@ionic-native/sqlite/ngx';
 @Injectable({
   providedIn: 'root'
 })
+
 export class NotesService {
   name = "NotesService";
   status: string;
@@ -28,7 +29,6 @@ export class NotesService {
     this.database.executeSql(this.TableList, []);
     return this.database.executeSql(this.TableListItem, []);
   }
-
   createList(name:string){
     let query = "INSERT INTO list(name, date, status) VALUES(?, date('now', 'localtime'), '0')";
     return this.database.executeSql(query,[name]);
@@ -52,22 +52,26 @@ export class NotesService {
     });
   }
 
-  getAllItems(id:number){
-    let query = "SELECT * FROM list_items WHERE list_id=?";
-    return this.database.executeSql(query, [id]).then(items => {
-      let elements = [];
+  getAllItems(list_id:number){
+    let query = "SELECT * FROM list_items WHERE list_id = ?";
+    return this.database.executeSql(query, [list_id]).then(items => {
+      let lists = [];
       for (let index = 0; index < items.rows.length; index++) {
-        elements.push(items.rows.item(index));
+        lists.push(items.rows.item(index));
       }
-      return Promise.resolve(elements);
+      return Promise.resolve(lists);
     }).catch(e => {
       Promise.reject(e);
     });
   }
-
-  deleteLists(){
-    let sql = 'DELETE FROM list';
-    this.database.executeSql(sql, []);
+  
+  selectNote(id:number){
+    let sql = 'SELECT * FROM list WHERE id=?';
+    return this.database.executeSql(sql, [id]).then(items => {
+      return Promise.resolve(items.rows.item(0));
+    }).catch(e => {
+      Promise.reject(e);
+    });
   }
 
   deleteItems(){
@@ -87,11 +91,6 @@ export class NotesService {
 
   }
 
-  select(id:number){
-    let sql = 'SELECT * FROM list WHERE id=?';
-    return Promise.resolve(this.database.executeSql(sql, [id]));
-  }
-
   updateNote(list: any, id){
     let sql = 'UPDATE list SET name=?, status=? WHERE id=?';
     return this.database.executeSql(sql, [list.name, list.status, id]);
@@ -106,5 +105,4 @@ export class NotesService {
     let sql = 'SELECT count(*) FROM list';
     return this.database.executeSql(sql, []);
   }
-
 }
