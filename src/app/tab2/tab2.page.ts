@@ -72,11 +72,10 @@ export class Tab2Page {
 
   async Options(id){
     const alert = await this.alertController.create({
-      header: 'Opciones' + id,
+      header: 'Opciones de la nota',
       buttons: [
         {
           text: 'Eliminar',
-          role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
@@ -96,10 +95,11 @@ export class Tab2Page {
 
   updateStatus(id, status){
     if(status == 1){
-      this.notesService.updateNote_update(id, 1)
+      this.notesService.updateNote_status(0, id)
     }else{
-      this.notesService.updateNote_update(id, 0)
+      this.notesService.updateNote_status(1, id)
     }
+    this.getAllNotes()
   }
 
 }
