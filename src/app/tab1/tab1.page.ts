@@ -25,16 +25,16 @@ export class Tab1Page {
     private formBuilder: FormBuilder,
   ){
     this.noteForm = this.formBuilder.group({
-      'name': [''],
-      'status': [''],
+      'name': ['']
     });
   }
 
   ngOnInit(){
     this.id = this.route.snapshot.paramMap.get("id");
-    this.noteService.select(Number(this.id))
+    this.noteService.selectNote(Number(this.id))
     .then(data=>{
       this.note = data;
+      this.status_user = (this.note.status == 1)? true: false;
     }).catch(error=>{
       this.note = null;
     });
@@ -98,9 +98,9 @@ export class Tab1Page {
     await alert.present();
   }
 
-  updateNote(){
-    let data = this.noteForm.value
-    this.noteService.updateNote(data, this.id)
+  updateName(){
+    let data = this.noteForm.value.name
+    this.noteService.updateNote_name(data, this.id)
       .then(data=>{
         this.status = "Actualizado"
       }).catch(error=>{
@@ -108,13 +108,12 @@ export class Tab1Page {
       })
   }
 
-  updateStatus(id, _status){
+  updateStatus(_status){
+    this.status_user = (_status == 1)? false: true 
     if(_status == 1){
-      this.status_user= false;
-      this.noteForm.get('status').setValue("1");
+      this.noteService.updateNote_status(0, this.id)
     }else{
-      this.status_user= true;
-      this.noteForm.get('status').setValue("0");
+      this.noteService.updateNote_status(1, this.id)
     }
   }
   
