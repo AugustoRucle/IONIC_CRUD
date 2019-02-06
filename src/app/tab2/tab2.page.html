@@ -12,12 +12,9 @@
     </ion-fab>
 
     <ion-card  *ngFor="let note of notes">
+      <div [ngClass]="{'style_status_off': note.status == 0, 'style_status_on': note.status == 1}"></div>
       <ion-card-content style="margin-top:10px">
         <div style="display:flex">
-          <div style="display: flex">
-            <ion-icon *ngIf="note.status == 0" name="radio-button-off" class="style_status style_status_off" (click)="updateStatus(id, 1)"></ion-icon>
-            <ion-icon *ngIf="note.status == 1" name="checkmark-circle" class="style_status style_status_on" (click)="updateStatus(id, 0)"></ion-icon>
-          </div>
           <div style="margin:auto; width: 100%;">
             <ion-card-title class="title_card"><strong>{{ note.name }}</strong> </ion-card-title>
             <div style="display:flex">
