@@ -7,46 +7,45 @@
 </ion-header>
 
 <ion-content >
-    <i>{{ id }}</i>
-    <i>{{ note }}</i>
-    <i>Status{{ status }}</i>
-    <form [formGroup]="noteForm" padding-right>
-      <div style="margin: 5px">
-        <p>Nombre de la nota: </p>
-        <ion-input type="text" class="style_inputs" value="Fiesta de cumpleaños" formControlName="name"></ion-input><br>        
-      </div>  
-      <div style="margin: 5px">
-        <p>Status: </p>
-        <ion-icon *ngIf="status_user"  name="radio-button-off"  formControlName="status" (click)="updateStatus(id, 1)" class="style_status style_status_off"></ion-icon>
-        <ion-icon *ngIf="!status_user" name="checkmark-circle" formControlName="status" (click)="updateStatus(id, 0)" class="style_status style_status_on"></ion-icon>     
+  <div style="display:flex;width:100%">
+    <div style="margin: auto">
+      <ion-button class="btn-options">
+        <ion-icon style="margin-right:5px" name="calendar"></ion-icon>
+        {{ note.date }}
+      </ion-button>    
+      <ion-button  *ngIf="status_user"   color="success" (click)="updateStatus(1)">Terminada</ion-button> 
+      <ion-button  *ngIf="!status_user"  color="danger" (click)="updateStatus(0)">Activa</ion-button>         
+    </div>
+  </div>
+  <form [formGroup]="noteForm" padding-right>
+    <div style="margin: 5px">
+      <ion-input type="text" class="style_inputs" [placeholder]="note.name" formControlName="name" required></ion-input> 
+      <ion-button [disabled]="!noteForm.valid"  (click)="updateName()">
+        <ion-icon slot="end" name="save"></ion-icon>
+        Guardar nuevo titulo
+      </ion-button>               
+    </div>   
+  </form>
+  <h5><strong>Lista de elementos</strong></h5>
+  <ion-card  *ngFor="let item of items">
+    <ion-card-content style="margin-top:10px">
+      <div style="display: flex">
+        <ion-icon name="list-box"></ion-icon>
+        <p class="subtitle-element">{{ item.name }}</p>      
       </div>
-      <ion-button 
-        color="dark" 
-        expand="full" 
-        [disabled]="!noteForm.valid" 
-        (click)="updateNote()">Actualizar nota</ion-button>    
-    </form>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button><ion-icon name="add" (click)="createElement()"></ion-icon></ion-fab-button>
-    </ion-fab>
-    <br>
-    <h5><strong>Lista de elementos</strong></h5>
-
-    <ion-card  *ngFor="let item of items">
-        <ion-card-content style="margin-top:10px">
-          <div style="display: flex">
-            <ion-icon name="list-box"></ion-icon>
-            <p class="subtitle-element">{{ item.name }}</p>      
-          </div>
-          <div style="display: flex">
-            <ion-icon name="create"></ion-icon>
-            <p class="subtitle-element">{{ item.description }}</p>       
-          </div>
-          <div style="display: flex">
-            <ion-icon name="cash"></ion-icon>
-            <p class="subtitle-element">{{ item.price }}</p><br>        
-          </div>        
-        </ion-card-content>
-    </ion-card>
-    <br><br>
+      <div style="display: flex">
+        <ion-icon name="create"></ion-icon>
+        <p class="subtitle-element">{{ item.description }}</p>       
+      </div>
+      <div style="display: flex">
+        <ion-icon name="cash"></ion-icon>
+        <p class="subtitle-element">{{ item.price }}</p><br>        
+      </div>        
+    </ion-card-content>
+    <ion-icon name="more"  style="font-size:30px;" (click)="Options(note.id)" ></ion-icon>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button><ion-icon name="add" (click)="createElement()"></ion-icon></ion-fab-button>
+  </ion-fab>
+  <br><br>
 </ion-content>
