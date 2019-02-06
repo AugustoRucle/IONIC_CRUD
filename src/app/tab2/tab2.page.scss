@@ -1,19 +1,13 @@
-.style_status{
-    font-size: 50px;
-    margin:auto; 
-    margin-right: 10px;
+.style_status_off{
+    height:20px; background-color: red;
+}
+
+.style_status_on{
+    height:20px; background-color: green;
 }
 
 ion-icon{
     color:black;
-}
-
-.style_status_off{
-    color: red;
-}
-
-.style_status_on{
-    color: green;
 }
 
 .title_card{
