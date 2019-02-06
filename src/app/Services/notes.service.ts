@@ -96,9 +96,14 @@ export class NotesService {
     return this.database.executeSql(sql, [list.name, list.status, id]);
   }
 
-  updateNote_update(status, id){
+  updateNote_status(status, id){
     let sql = 'UPDATE list SET status=? WHERE id=?';
     return this.database.executeSql(sql, [status, id]);
+  }
+
+  updateNote_name(name, id){
+    let sql = 'UPDATE list SET name=? WHERE id=?';
+    return this.database.executeSql(sql, [name, id]);
   }
 
   empty(){
