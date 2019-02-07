@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NotesService } from '../services/notes.service';
+import { DataBaseService } from '../services/data-base.service';
 import { AlertController } from '@ionic/angular';
 import {FormBuilder, FormGroup } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { ModalPage } from '../Pages/modal/modal.page'
 
 @Component({
   selector: 'app-tab1',
@@ -20,9 +22,10 @@ export class Tab1Page {
 
   constructor(
     private route: ActivatedRoute,
-    private noteService: NotesService,
+    private dataBaseService: DataBaseService,
     public alertController: AlertController,
     private formBuilder: FormBuilder,
+    public modalController: ModalController,
   ){
     this.noteForm = this.formBuilder.group({
       'name': ['']
@@ -31,7 +34,7 @@ export class Tab1Page {
 
   ngOnInit(){
     this.id = this.route.snapshot.paramMap.get("id");
-    this.noteService.selectNote(Number(this.id))
+    this.dataBaseService.selectNote(Number(this.id))
     .then(data=>{
       this.note = data;
       this.status_user = (this.note.status == 1)? true: false;
@@ -45,62 +48,18 @@ export class Tab1Page {
   }
 
   async createElement(){
-    const alert = await this.alertController.create({
-      header: 'Crear nuevo elemento',
-      inputs: [
-        {
-          name: 'name',
-          type: 'text',
-          placeholder: 'Nombre'
-        },
-        {
-          name: 'description',
-          type: 'text',
-          placeholder: 'Descripcion'
-        },
-        {
-          name: 'price',
-          type: 'number',
-          placeholder: 'Costo'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Imagen',
-          cssClass: 'dark',
-          handler: () => {
-            console.log('Imagen');
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'dark',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }
-        , {
-          text: 'Crear',
-          handler: (data) => {
-            this.noteService.createItems(data, Number(this.id))
-            .then(response => {
-              this.status = "Todo bien";
-              this.getAllItems()
-            })
-            .catch( error => {
-              this.status = "Algo salio mal";
-            })
-          }
-        }
-      ]
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      componentProps:{
+        'note_id': this.id
+      }
     });
-    await alert.present();
+    return await modal.present();
   }
 
   updateName(){
     let data = this.noteForm.value.name
-    this.noteService.updateNote_name(data, this.id)
+    this.dataBaseService.updateNote_name(data, this.id)
       .then(data=>{
         this.status = "Actualizado"
       }).catch(error=>{
@@ -111,14 +70,14 @@ export class Tab1Page {
   updateStatus(_status){
     this.status_user = (_status == 1)? false: true 
     if(_status == 1){
-      this.noteService.updateNote_status(0, this.id)
+      this.dataBaseService.updateNote_status(0, this.id)
     }else{
-      this.noteService.updateNote_status(1, this.id)
+      this.dataBaseService.updateNote_status(1, this.id)
     }
   }
   
   getAllItems(){
-    this.noteService.getAllItems(Number(this.id))
+    this.dataBaseService.getAllItems(Number(this.id))
     .then(response => {
       this.items = response;
     })

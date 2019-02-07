@@ -26,23 +26,23 @@
       </ion-button>               
     </div>   
   </form>
+  <br>
   <h5><strong>Lista de elementos</strong></h5>
-  <ion-card  *ngFor="let item of items">
+  <ion-card *ngFor="let item of items">
     <ion-card-content style="margin-top:10px">
-      <div style="display: flex">
-        <ion-icon name="list-box"></ion-icon>
-        <p class="subtitle-element">{{ item.name }}</p>      
+      <div style="display: flex; position: relative;">
+        <ion-img style="margin:auto;" [src]="item.image"></ion-img>
+        <ion-icon style="position:absolute; right:0px" name="more" [routerLink]="['/features-list', item.id]" ></ion-icon>
       </div>
-      <div style="display: flex">
-        <ion-icon name="create"></ion-icon>
-        <p class="subtitle-element">{{ item.description }}</p>       
-      </div>
+      <br>
+      <ion-card-title><strong>{{ item.name }}</strong></ion-card-title>
+      <ion-label>{{ item.description }}</ion-label>  
       <div style="display: flex">
         <ion-icon name="cash"></ion-icon>
-        <p class="subtitle-element">{{ item.price }}</p><br>        
-      </div>        
+        <ion-label style="margin-top:2px; margin-left:5px">{{ item.price }}</ion-label>       
+      </div>     
+      <br>     
     </ion-card-content>
-    <ion-icon name="more"  style="font-size:30px;" (click)="Options(note.id)" ></ion-icon>
   </ion-card>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button><ion-icon name="add" (click)="createElement()"></ion-icon></ion-fab-button>
