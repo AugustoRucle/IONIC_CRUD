@@ -10,7 +10,6 @@
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button><ion-icon name="reorder" (click)="createNote()"></ion-icon></ion-fab-button>
     </ion-fab>
-
     <ion-card  *ngFor="let note of notes">
       <div [ngClass]="{'style_status_off': note.status == 0, 'style_status_on': note.status == 1}"></div>
       <ion-card-content style="margin-top:10px">

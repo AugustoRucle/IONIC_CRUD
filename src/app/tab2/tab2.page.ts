@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { NotesService } from '../services/notes.service';
+import { DataBaseService } from '../services/data-base.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class Tab2Page {
   status: boolean = false;
 
   constructor(
-    public notesService: NotesService, 
+    public dataBaseService: DataBaseService, 
     public alertController: AlertController,
     private router: Router  
   ) { }
@@ -26,7 +26,7 @@ export class Tab2Page {
   }
 
   getAllNotes(){
-    this.notesService.getAll()
+    this.dataBaseService.getAll()
     .then(response => {
       this.notes = response;
     })
@@ -56,7 +56,7 @@ export class Tab2Page {
         }, {
           text: 'Ok',
           handler: (data) => {
-            this.notesService.createList(data.note_name)
+            this.dataBaseService.createList(data.note_name)
             .then(response => {
               this.getAllNotes();
             })
@@ -79,7 +79,7 @@ export class Tab2Page {
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
-            this.notesService.deleteList(id);
+            this.dataBaseService.deletItem(id);
             this.getAllNotes();
           }
         }, {
@@ -95,9 +95,9 @@ export class Tab2Page {
 
   updateStatus(id, status){
     if(status == 1){
-      this.notesService.updateNote_status(0, id)
+      this.dataBaseService.updateNote_status(0, id)
     }else{
-      this.notesService.updateNote_status(1, id)
+      this.dataBaseService.updateNote_status(1, id)
     }
     this.getAllNotes()
   }
