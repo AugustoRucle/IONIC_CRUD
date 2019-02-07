@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 /*---Others---*/
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
-import { NotesService } from './services/notes.service';
+import { DataBaseService } from './services/data-base.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    public notesService: NotesService,
+    public dataBaseService: DataBaseService,
     public sqlite: SQLite
   ) {
     this.initializeApp();
@@ -37,10 +37,10 @@ export class AppComponent {
       location: 'default'
     })
     .then((db: SQLiteObject) => {
-      this.notesService.setDatabase(db);
-      return this.notesService.createTable();
+      this.dataBaseService.setDatabase(db);
+      return this.dataBaseService.createTable();
     })
-    .catch(e => this.notesService.status = `I have a error: ${e}` );
+    .catch(e => {} )
   }
 
 }

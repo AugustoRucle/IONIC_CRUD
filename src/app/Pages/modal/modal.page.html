@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Modal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-label>{{ status }}</ion-label>
+  <form [formGroup]="itemForm" padding-right>
+    <div style="margin: 5px">
+      <ion-label>Name:</ion-label>
+      <ion-input type="text" class="style_inputs" formControlName="name" required></ion-input><br>
+      <ion-label>Description:</ion-label>
+      <ion-input type="text" class="style_inputs" formControlName="description" required></ion-input> <br>
+      <ion-label>Money:</ion-label>
+      <ion-input type="number" class="style_inputs" formControlName="price" required></ion-input><br>
+      <ion-button color="dark" expand="full" (click)="getImage()" >Obtener imagen</ion-button><br>
+      <ion-button color="dark" expand="full" [disabled]="!itemForm.valid"  (click)="createItem()">
+        <ion-icon  slot="end" name="save"></ion-icon>
+        Guardar nueva item
+      </ion-button>               
+    </div>   
+  </form>
+</ion-content>

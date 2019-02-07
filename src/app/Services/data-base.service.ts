@@ -4,30 +4,27 @@ import { SQLiteObject } from '@ionic-native/sqlite/ngx';
 @Injectable({
   providedIn: 'root'
 })
-
-export class NotesService {
-  name = "NotesService";
-  status: string;
+export class DataBaseService {
   database: SQLiteObject = null;
-
-  /* Querys */
-  TableList: string = "CREATE TABLE IF NOT EXISTS list(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100), date DATE, status INTEGER)";
-  TableListItem: string =  "CREATE TABLE IF NOT EXISTS list_items(id INTEGER PRIMARY KEY AUTOINCREMENT, list_id INTEGER, name VARCHAR(100), description TEXT, price FLOAT, image TEXT, FOREIGN KEY(list_id) REFERENCES list(id) ON UPDATE CASCADE)";
   
   constructor() { }
 
   setDatabase(db: SQLiteObject){
     if(this.database === null){
-      this.status = "Successfull";
       this.database = db;
     }
   }
 
   createTable(){
+    let tableList = "CREATE TABLE IF NOT EXISTS list(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100), date DATE, status INTEGER)";
+    let tableListItem =  "CREATE TABLE IF NOT EXISTS list_items(id INTEGER PRIMARY KEY AUTOINCREMENT, list_id INTEGER, name VARCHAR(100), description TEXT, price FLOAT, image TEXT, FOREIGN KEY(list_id) REFERENCES list(id) ON UPDATE CASCADE)";
+    
+    /*  Delete ALL  */
     this.deleteItems()
     this.deleteLists()
-    this.database.executeSql(this.TableList, []);
-    return this.database.executeSql(this.TableListItem, []);
+
+    this.database.executeSql(tableList, []);
+    return this.database.executeSql(tableListItem, []);
   }
   
   createList(name:string){
@@ -37,7 +34,11 @@ export class NotesService {
 
   createItems(item:any, photo: string, list_id: number){
     let query = "INSERT INTO list_items(list_id, name, description, price, image) VALUES (?, ?, ?, ?, ?)";
-    return this.database.executeSql(query,[list_id, item.name, item.description, item.price, photo]);
+    return this.database.executeSql(query,[list_id, item.name, item.description, item.price, photo]).then(d =>{
+      Promise.resolve(d)
+    }).catch(e=>{
+      Promise.reject(e)
+    })
   }
 
   getAll(){
@@ -76,12 +77,12 @@ export class NotesService {
   }
 
   deleteItems(){
-    let sql = 'DELETE FROM list_items';
+    let sql = 'DROP FROM list_items';
     this.database.executeSql(sql, []);
   }
 
   deleteLists(){
-    let sql = 'DELETE FROM list';
+    let sql = 'DROP FROM list';
     this.database.executeSql(sql, []);   
   }
 
@@ -115,5 +116,5 @@ export class NotesService {
   empty(){
     let sql = 'SELECT count(*) FROM list';
     return this.database.executeSql(sql, []);
-  }
+  }  
 }

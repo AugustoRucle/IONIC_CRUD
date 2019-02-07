@@ -12,11 +12,19 @@ import { AppComponent } from './app.component';
 /* Other */
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SQLite } from '@ionic-native/sqlite/ngx';
-import { NotesService } from './services/notes.service';
+import { DataBaseService } from './services/data-base.service';
+import { Camera } from '@ionic-native/camera/ngx';
+import { ModalPage } from './Pages/modal/modal.page'
+import {WebView} from '@ionic-native/ionic-webview/ngx';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent,
+    ModalPage
+  ],
+  entryComponents: [
+    ModalPage
+  ],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
@@ -28,7 +36,9 @@ import { NotesService } from './services/notes.service';
     StatusBar,
     SplashScreen,
     SQLite,
-    NotesService,
+    WebView,
+    DataBaseService,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
